@@ -46,7 +46,7 @@ docker run --restart=always -p 8888:8888 \
   -e DB_ACTIVE=pgsql \
   -e POSTGRES_ADDR=127.0.0.1:5432 \ 
   -e POSTGRES_DATABASE=dinky \ 
-  -e POSTGRES_USERNAME=dinky \
+  -e POSTGRES_USER=dinky \
   -e POSTGRES_PASSWORD=dinky \
   -v /opt/lib:/opt/dinky/customJar/ \ 
   dinky dinkydocker/dinky-standalone-server:1.1.0-flink1.17
@@ -118,7 +118,7 @@ docker compose --profile standalone -f docker-compose.yml -f docker-compose.dev.
 docker compose --profile ms -f docker-compose.yml -f docker-compose.dev.yml up
 ```
 (适配自身nginx的docker/web/default.conf配置)
-对于1.15上版本,需要手动将容器中/opt/diny/plugin/flink{version}/flink-table-planner-loader*.jar移除,
+对于1.15上版本,需要手动将容器中`/opt/diny/plugin/flink{version}/flink-table-planner-loader*.jar`移除,
 替换为相应版本的flink-table-planner_*.jar文件.
 创建容器时,可映射到容器/opt/diny/customJar文件夹,添加自定义jar包.
 

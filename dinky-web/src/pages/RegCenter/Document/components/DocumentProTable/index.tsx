@@ -43,6 +43,13 @@ import { ProTable } from '@ant-design/pro-components';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import TextArea from 'antd/es/input/TextArea';
 import React, { useRef, useState } from 'react';
+import { Select } from 'antd';
+import { JOB_TYPE } from '@/pages/DataStudio/Toolbar/Project/constants';
+
+const FUNCTION_TYPES = Object.values(DOCUMENT_FUNCTION_TYPE_ENUMS).map((item) => ({
+  label: item.text,
+  value: item.value
+}));
 
 const DocumentTableList: React.FC = () => {
   const [documentState, setDocumentState] = useState<DocumentState>(InitDocumentState);
@@ -113,24 +120,23 @@ const DocumentTableList: React.FC = () => {
       title: l('rc.doc.functionType'),
       sorter: true,
       dataIndex: 'type',
-      filterMultiple: true,
-      filters: true,
       valueEnum: DOCUMENT_TYPE_ENUMS
     },
     {
       title: l('rc.doc.subFunctionType'),
       sorter: true,
       dataIndex: 'subtype',
-      filters: true,
-      filterMultiple: true,
-      valueEnum: DOCUMENT_FUNCTION_TYPE_ENUMS
+      valueEnum: DOCUMENT_FUNCTION_TYPE_ENUMS,
+      renderFormItem: (item, { type }, form) => {
+        const currentType = form.getFieldValue('type');
+        let options = currentType === DOCUMENT_TYPE_ENUMS.FUN_UDF.value ? FUNCTION_TYPES : JOB_TYPE;
+        return <Select allowClear options={options} />;
+      }
     },
     {
       title: l('rc.doc.category'),
       sorter: true,
       dataIndex: 'category',
-      filterMultiple: true,
-      filters: true,
       valueEnum: DOCUMENT_CATEGORY_ENUMS
     },
     {
@@ -162,11 +168,11 @@ const DocumentTableList: React.FC = () => {
     {
       title: l('global.table.isEnable'),
       dataIndex: 'enabled',
-      hideInSearch: true,
-      filters: STATUS_MAPPING(),
-      filterMultiple: false,
       hideInDescriptions: true,
-      valueEnum: STATUS_ENUM(),
+      valueType: 'select',
+      valueEnum: Object.fromEntries(
+        STATUS_MAPPING().map(item => [item.value, { text: item.text, status: item.value === 1 ? 'Success' : 'Error' }])
+      ),
       render: (_, record) => {
         return (
           <EnableSwitchBtn

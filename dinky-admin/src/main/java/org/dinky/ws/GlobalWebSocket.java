@@ -109,7 +109,7 @@ public class GlobalWebSocket {
 
             if (requestDTO.getType() == RequestDTO.EventType.PING) {
                 WsDataVo data = new WsDataVo(session.getId(), RequestDTO.EventType.PONG);
-                session.getBasicRemote().sendText(JsonUtils.toJsonString(data));
+                session.getAsyncRemote().sendText(JsonUtils.toJsonString(data));
                 return;
             }
 
@@ -153,12 +153,7 @@ public class GlobalWebSocket {
     }
 
     private void send(Session session, WsDataVo data) {
-        try {
-            session.getBasicRemote().sendText(JsonUtils.toJsonString(data));
-        } catch (IOException e) {
-            log.error("send ws data error", e);
-            throw new RuntimeException(e);
-        }
+        session.getAsyncRemote().sendText(JsonUtils.toJsonString(data));
     }
 
     public void sendTopic(GlobalWebSocketTopic topic, Set<String> params, Map<String, Object> result) {
@@ -179,7 +174,10 @@ public class GlobalWebSocket {
             Map<GlobalWebSocketTopic, Set<String>> topics = requestDTO.getTopics();
             if ((topics.containsKey(topic) && topics.get(topic).contains(params))
                     || params.equals(WsMessageEventHandler.NONE_PARAMS)) {
-                tempMap.computeIfAbsent(session, k -> topics.get(topic)).add(params);
+                Set<String> stringSet = tempMap.computeIfAbsent(session, k -> topics.get(topic));
+                if (stringSet != null) {
+                    stringSet.add(params);
+                }
             }
         }));
 

@@ -512,6 +512,9 @@ export default {
   'pages.datastudio.label.jobConfig.savePointpath': 'Savepoint路径',
   'pages.datastudio.label.jobConfig.savePointpath.tip1': '从SavepointPath恢复Flink任务',
   'pages.datastudio.label.jobConfig.savePointpath.tip2': 'HDFS',
+  'pages.datastudio.label.jobConfig.autoRestart': '自动重启',
+  'pages.datastudio.label.jobConfig.autoRestart.tip':
+    '开启后，当平台监测到作业失败(FAILED)或未知(UNKNOWN)状态时，自动从最新的checkpoint重启作业',
   'pages.datastudio.label.jobInfo.dialect': '方言',
   'pages.datastudio.label.jobInfo.id': '任务ID',
   'pages.datastudio.label.jobInfo.name': '任务名称',
@@ -855,7 +858,6 @@ export default {
   'rc.ci.jmha.tips':
     '添加 Flink 集群的 JobManager 的 RestApi 地址。当 HA 模式时，地址间用英文逗号分隔，例如：192.168.123.101:8081',
   'rc.ci.jmha.validate.port': '不符合规则! 端口号区间[0-65535]',
-  'rc.ci.jmha.validate.slash': '不符合规则! 不能包含/',
   'rc.ci.jmhaPlaceholder': '请输入 JobManager HA 地址!',
   'rc.ci.management': '集群实例管理',
   'rc.ci.modify': '修改集群',
@@ -947,7 +949,7 @@ export default {
   'rc.ds.groupName': '分组类型',
   'rc.ds.groupNamePlaceholder': '请选择分组类型!',
   'rc.ds.isNull': '非空',
-  'rc.ds.javaType': 'Java 类型',
+  'rc.ds.dataType': 'Data 类型',
   'rc.ds.length': '长度',
   'rc.ds.management': '数据源管理',
   'rc.ds.modify': '修改数据源',

@@ -67,6 +67,9 @@ public class Table implements Serializable, Comparable<Table>, Cloneable {
 
     private List<Column> columns;
 
+    /** The sink table for the source table */
+    private Table sinkTable;
+
     /** 驱动类型, @see org.dinky.metadata.enums.DriverType */
     private String driverType;
 
@@ -108,6 +111,11 @@ public class Table implements Serializable, Comparable<Table>, Cloneable {
     }
 
     @Transient
+    public List<String> getPrimaryKeys() {
+        return columns.stream().filter(Column::isKeyFlag).map(Column::getName).collect(Collectors.toList());
+    }
+
+    @Transient
     public String getFlinkTableWith(String flinkConfig) {
         if (Asserts.isNotNullString(flinkConfig)) {
             Map<String, String> replacements = new HashMap<>();
@@ -128,7 +136,11 @@ public class Table implements Serializable, Comparable<Table>, Cloneable {
                         comment = String.format(
                                 " COMMENT '%s'", column.getComment().replaceAll("[\"']", ""));
                     }
-                    return String.format("    `%s` %s%s", column.getName(), column.getFlinkType(), comment);
+                    return String.format(
+                            "    `%s` %s %s",
+                            column.getName(),
+                            column.getDataType().getLogicalType().asSummaryString(),
+                            comment);
                 })
                 .collect(Collectors.joining(",\n"));
 

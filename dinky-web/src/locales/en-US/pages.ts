@@ -576,6 +576,9 @@ export default {
   'pages.datastudio.label.jobConfig.savePointpath': 'Savepoint Path',
   'pages.datastudio.label.jobConfig.savePointpath.tip1': 'Restore Flink task from Savepoint path',
   'pages.datastudio.label.jobConfig.savePointpath.tip2': 'hdfs',
+  'pages.datastudio.label.jobConfig.autoRestart': 'Auto Restart',
+  'pages.datastudio.label.jobConfig.autoRestart.tip':
+    'When enabled, the platform will automatically restart the job from the latest checkpoint when it detects that the job has failed (FAILED) or is in an unknown (UNKNOWN) state',
   'pages.datastudio.label.jobInfo.dialect': 'Dialect',
   'pages.datastudio.label.jobInfo.id': 'Job ID',
   'pages.datastudio.label.jobInfo.name': 'Job name',
@@ -931,7 +934,6 @@ export default {
   'rc.ci.jmha.tips':
     'Add the RestApi address of the JobManager of the Flink cluster. In HA mode, the addresses are separated by commas, for example: 192.168.123.101:8081',
   'rc.ci.jmha.validate.port': 'Does not meet the rules! Port number range [0-65535]',
-  'rc.ci.jmha.validate.slash': 'Does not comply with the rules! Cannot contain /',
   'rc.ci.jmhaPlaceholder': 'Please enter the JobManager HA address!',
   'rc.ci.management': 'Cluster Instance Management',
   'rc.ci.modify': 'Modify cluster Instance',
@@ -1026,7 +1028,7 @@ export default {
   'rc.ds.groupName': 'Group Type',
   'rc.ds.groupNamePlaceholder': 'Please select a group type!',
   'rc.ds.isNull': 'Not Null',
-  'rc.ds.javaType': 'Java Type',
+  'rc.ds.dataType': 'Data Type',
   'rc.ds.length': 'Length',
   'rc.ds.management': 'DataSource Management',
   'rc.ds.modify': 'Modify DataSource',
